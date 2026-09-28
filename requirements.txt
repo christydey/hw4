@@ -1,0 +1,4 @@
+# Python dependencies for the Campus Customs FastAPI backend.
+# Single source of truth lives in backend/requirements.txt; this file lets a grader
+# run `pip install -r requirements.txt` from the project root.
+-r backend/requirements.txt

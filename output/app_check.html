@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Campus Customs — App Check</title>
+<style>
+  body { max-width: 1100px; margin: 0 auto; padding: 48px 24px 72px; background: #f5f3ef; color: #171716;
+         font-family: 'Avenir Next', Avenir, 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; }
+  header { padding-bottom: 20px; border-bottom: 1px solid #d9d5cf; margin-bottom: 40px; }
+  h1 { margin: 0 0 6px; font-family: Georgia, 'Times New Roman', serif; font-size: 40px; font-weight: 400; }
+  .sub { margin: 0; color: #77736e; font-size: 14px; }
+  section { margin-bottom: 56px; }
+  h2 { margin: 0 0 4px; font-family: Georgia, 'Times New Roman', serif; font-size: 24px; font-weight: 400; }
+  .tag { display: inline-block; margin-bottom: 14px; padding: 3px 9px; background: #203858; color: #fff;
+         font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
+  img { width: 100%; display: block; border: 1px solid #d9d5cf; background: #fff; }
+  .caption { margin: 14px 0 0; font-size: 15px; }
+  .verified { margin: 10px 0 0; padding: 10px 14px; border-left: 3px solid #2f6b4c; background: #e8f3ec;
+              font-size: 14px; }
+  code { padding: 1px 5px; background: #e9e6e0; font-size: 13px; }
+  footer { padding-top: 22px; border-top: 1px solid #d9d5cf; color: #77736e; font-size: 13px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Campus Customs — App Check</h1>
+  <p class="sub">Three checks captured from the live running site (Vite frontend on :5173, FastAPI backend on :8000).
+     All screenshots are fresh captures of the final application. All chat was done as a guest, so no test data was written to the database.</p>
+</header>
+
+<section>
+  <span class="tag">Check 1</span>
+  <h2>Inventory / stock lookup through chat</h2>
+  <img src="app_check_images/inventory.png" alt="Campus Customs chat widget answering a stock question about the Basic Hoodie Big Yale in size XL">
+  <p class="caption">
+    A shopper asks the live chat widget <em>“How many Basic Hoodie Big Yale do you have in size XL, and what does it cost?”</em>
+    and the assistant answers <strong>“The Basic Hoodie Big Yale costs $68. Size XL has 2 in stock.”</strong>
+  </p>
+  <p class="verified">
+    <strong>Verified against the database.</strong> <code>campus_customs.db</code> records this product at
+    <code>price = 68.0</code> with <code>quantity = 2</code> for size <code>XL</code> — so the chatbot retrieved
+    real inventory rather than inventing a number. The product page behind the widget independently shows the same
+    $68.00 price and its per-size stock counts.
+  </p>
+</section>
+
+<section>
+  <span class="tag">Check 2</span>
+  <h2>Dynamic search-result product cards</h2>
+  <img src="app_check_images/dynamic_search.png" alt="Chat widget showing product cards that appeared dynamically after asking what hoodies are available">
+  <p class="caption">
+    The category question <em>“What hoodies do you have?”</em> causes <strong>27 product cards to render dynamically</strong>
+    inside the page — each with its real photo, name, garment type, price, total stock, and available sizes.
+  </p>
+  <p class="verified">
+    <strong>Verified against the database.</strong> The catalogue contains exactly 27 hoodie-category products, and the
+    returned items match real rows: <code>basic-hoodie-big-yale</code> at $68.00,
+    <code>brooks-brothers-double-knit-full-zip-hoodie-yale</code> at $88.00, and
+    <code>champion-reverse-weave-hoodie-1</code> at $68.00. Clicking the first dynamic card was also tested and it opened
+    its existing single-product page at <code>/products/basic-hoodie-big-yale</code>.
+  </p>
+</section>
+
+<section>
+  <span class="tag">Check 3</span>
+  <h2>Problem 9 usability feature — catalogue filtering</h2>
+  <img src="app_check_images/usability.png" alt="Products page filtered to pullover hoodies, size M, navy blue, showing 11 of 102 pieces">
+  <p class="caption">
+    The Problem 9 catalogue filters are demonstrated on the live Products page: selecting
+    <strong>pullover hoodie + size M + Navy Blue</strong> narrows the catalogue from
+    <strong>102 pieces to 11</strong>, with a removable chip for each active filter and a “Clear all” control.
+  </p>
+  <p class="verified">
+    <strong>Why this proves it works.</strong> The counter reads “11 PIECES OF 102”, the three dropdowns show the active
+    selections, and every visible card is a navy pullover hoodie. Querying the database for pullover hoodies that are navy
+    blue and have size M in stock also returns <strong>11</strong> products. The filters are written to the URL
+    (<code>?type=pullover+hoodie&amp;size=M&amp;color=navy+blue</code>), so the filtered view survives a reload and can be shared.
+  </p>
+</section>
+
+<footer>
+  Screenshots captured with headless Chrome at 1280×860 (2× scale) against the running application.
+  No database rows were added, modified, or deleted for these checks.
+</footer>
+
+</body>
+</html>

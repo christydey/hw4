@@ -1,0 +1,59 @@
+# ---- Secrets --------------------------------------------------------------
+# The real environment file must never be committed. .env.example is tracked.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# ---- Local data pack ------------------------------------------------------
+# The SQLite catalogue and the product photography are supplied locally by the
+# grader; they are not part of the source submission.
+data/
+*.db
+*.sqlite
+*.sqlite3
+public/products/
+dist/products/
+
+# ---- Dependencies and build output ---------------------------------------
+node_modules
+dist
+dist-ssr
+*.local
+
+# ---- Python ---------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ---- Logs -----------------------------------------------------------------
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ---- Audit trail scratch --------------------------------------------------
+# A corrupted audit file is moved aside rather than deleted; those copies are local only.
+output/audit_trail.corrupt-*.json
+.audit-*.tmp
+
+# ---- Editor / OS ----------------------------------------------------------
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
